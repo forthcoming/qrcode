@@ -6,10 +6,8 @@ import shutil
 
 from PIL import Image, ImageEnhance
 
-from mylibs import theqrmodule
+from mylibs import theqrmodule, constant
 from mylibs.constant import alig_location
-
-supported_chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ·,.:;+-*/\~!@#$%^&`'=<>[]()?_{}|"
 
 
 def run(words, version=1, level='H', picture=None, colorized=False, contrast=1.0, brightness=1.0, save_name=None,
@@ -19,7 +17,7 @@ def run(words, version=1, level='H', picture=None, colorized=False, contrast=1.0
     # contrast: 用以调节图片的对比度,1.0表示原始图片,更小的值表示更低对比度
     # brightness: 用来调节图片的亮度
 
-    if not isinstance(words, str) or any(i not in supported_chars for i in words):
+    if not isinstance(words, str) or any(i not in constant.supported_chars for i in words):
         raise ValueError('Wrong words! Make sure the characters are supported!')
     if not isinstance(version, int) or version not in range(1, 41):
         raise ValueError('Wrong version! Please choose a int-type value from 1 to 40!')

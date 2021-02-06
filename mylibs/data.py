@@ -46,18 +46,18 @@ def encode(ver, level, words):
     return ver, data_codewords
 
 
-def analyse(ver, ecl, str):
-    if all(i in num_list for i in str):
+def analyse(ver, ecl, words):
+    if all(i in num_list for i in words):
         mode = 'numeric'
-    elif all(i in alphanum_list for i in str):
+    elif all(i in alphanum_list for i in words):
         mode = 'alphanumeric'
     else:
         mode = 'byte'
 
     m = mindex[mode]
-    l = len(str)
+    length = len(words)
     for i in range(40):
-        if char_cap[ecl][i][m] > l:
+        if char_cap[ecl][i][m] > length:
             ver = i + 1 if i + 1 > ver else ver
             break
 
