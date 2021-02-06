@@ -13,9 +13,6 @@ def encode(ver, level, words):
     }
 
     ver, mode = analyse(ver, level, words)
-
-    print('line 16: mode:', mode)
-
     code = mode_indicator[mode] + get_cci(ver, mode, words) + mode_encoding[mode](words)
 
     # Add a Terminator
@@ -102,12 +99,12 @@ def byte_encoding(str):
     return code
 
 
-def kanji_encoding(str):
+def kanji_encoding(words):
     pass
 
 
 # cci: character count indicator  
-def get_cci(ver, mode, str):
+def get_cci(ver, mode, words):
     if 1 <= ver <= 9:
         cci_len = (10, 9, 8, 8)[mode_map[mode]]
     elif 10 <= ver <= 26:
@@ -115,7 +112,7 @@ def get_cci(ver, mode, str):
     else:
         cci_len = (14, 13, 16, 12)[mode_map[mode]]
 
-    cci = bin(len(str))[2:]
+    cci = bin(len(words))[2:]
     cci = '0' * (cci_len - len(cci)) + cci
     return cci
 

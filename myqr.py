@@ -47,6 +47,7 @@ def run(words, version=1, level='H', picture=None, colorized=False, contrast=1.0
         if not os.path.exists(tempdir):
             os.makedirs(tempdir)  # 新建一个临时目录,名字是.qr_code
 
+        # 这里已经生成了二维码
         ver, qr_name = theqrmodule.get_qrcode(words, version, level, tempdir)
 
         if picture and picture[-4:] == '.gif':
