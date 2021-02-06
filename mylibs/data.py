@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from mylibs.constant import char_cap, required_bytes, mindex, lindex, num_list, alphanum_list, grouping_list, \
+from mylibs.constant import char_cap, required_bytes, mode_map, lindex, num_list, alphanum_list, grouping_list, \
     mode_indicator
 
 
@@ -46,7 +46,7 @@ def encode(ver, level, words):
     return ver, data_codewords
 
 
-def analyse(ver, ecl, words):
+def analyse(ver, level, words):
     if all(i in num_list for i in words):
         mode = 'numeric'
     elif all(i in alphanum_list for i in words):
@@ -54,10 +54,10 @@ def analyse(ver, ecl, words):
     else:
         mode = 'byte'
 
-    m = mindex[mode]
+    m = mode_map[mode]
     length = len(words)
     for i in range(40):
-        if char_cap[ecl][i][m] > length:
+        if char_cap[level][i][m] > length:
             ver = i + 1 if i + 1 > ver else ver
             break
 
@@ -109,11 +109,11 @@ def kanji_encoding(str):
 # cci: character count indicator  
 def get_cci(ver, mode, str):
     if 1 <= ver <= 9:
-        cci_len = (10, 9, 8, 8)[mindex[mode]]
+        cci_len = (10, 9, 8, 8)[mode_map[mode]]
     elif 10 <= ver <= 26:
-        cci_len = (12, 11, 16, 10)[mindex[mode]]
+        cci_len = (12, 11, 16, 10)[mode_map[mode]]
     else:
-        cci_len = (14, 13, 16, 12)[mindex[mode]]
+        cci_len = (14, 13, 16, 12)[mode_map[mode]]
 
     cci = bin(len(str))[2:]
     cci = '0' * (cci_len - len(cci)) + cci
